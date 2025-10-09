@@ -3,12 +3,10 @@
   const resultat = document.getElementById('resultat');
 
     btn.addEventListener('click', () => {
-      fetch(`https://unapproving-diana-heathless.ngrok-free.dev/exemple`)
-        .then(response => response.text())
-        .then(text => {
-          resultat.textContent = text;
-        })
-        .catch(err => {
-          resultat.textContent = 'Erreur : ' + err.message;
-        });
+btn.addEventListener('click', () => {
+  fetch('https://unapproving-diana-heathless.ngrok-free.dev/proxy/exemple')
+    .then(r => r.text())
+    .then(t => resultat.textContent = t)
+    .catch(e => resultat.textContent = 'Erreur : ' + e.message);
+});
     });
