@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Test requête /exemple</title>
-    <script src="./script.js" defer></script>
-  </head>
+<head>
+<meta charset="UTF-8">
+<title>Test GET Proxy PHP</title>
+</head>
+<body>
 
-  <body>
-    <h1>Test de la requête GET /exemple</h1>
+<h1>Test du Proxy PHP sur rmbi.ch</h1>
 
-    <button id="btn">Envoyer la requête</button>
+<button onclick="getData()">Faire un GET</button>
 
-    <p id="resultat"></p>
-  </body>
+<pre id="output"></pre>
+
+<script>
+  const proxyUrl = "https://rmbi.ch/vital/api/proxy.php/read";
+
+  async function getData() {
+    try {
+      const res = await fetch(proxyUrl);
+      const text = await res.text();
+      document.getElementById("output").textContent = text;
+    } catch (err) {
+      document.getElementById("output").textContent = "Erreur : " + err;
+    }
+  }
+</script>
+
+</body>
 </html>
