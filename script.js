@@ -1,4 +1,5 @@
-const baseURL = "http://localhost:3000/vital/api/items";
+const proxyBase = "https://rmbi.ch/vital/api/proxy.php"; // ton proxy
+
 let items = [];
 
 // --- Affichage ---
@@ -22,7 +23,7 @@ async function createItem() {
   if (!name) return alert("Entrez un nom");
 
   try {
-    const res = await fetch(baseURL, {
+    const res = await fetch(`${proxyBase}/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name })
@@ -36,10 +37,21 @@ async function createItem() {
   }
 }
 
+// --- READ ---
+async function loadItems() {
+  try {
+    const res = await fetch(`${proxyBase}/read`);
+    items = await res.json();
+    renderItems();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 // --- UPDATE ---
 async function updateItem(id, name) {
   try {
-    const res = await fetch(`${baseURL}/${id}`, {
+    const res = await fetch(`${proxyBase}/update/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name })
@@ -55,7 +67,7 @@ async function updateItem(id, name) {
 // --- DELETE ---
 async function deleteItem(id) {
   try {
-    await fetch(`${baseURL}/${id}`, { method: "DELETE" });
+    await fetch(`${proxyBase}/delete/${id}`, { method: "DELETE" });
     items = items.filter(i => i.id !== id);
     renderItems();
   } catch (err) {
@@ -63,15 +75,5 @@ async function deleteItem(id) {
   }
 }
 
-// --- READ au chargement ---
-async function loadItems() {
-  try {
-    const res = await fetch(baseURL);
-    items = await res.json();
-    renderItems();
-  } catch (err) {
-    console.error(err);
-  }
-}
-
+// --- Charger les items au démarrage ---
 loadItems();
