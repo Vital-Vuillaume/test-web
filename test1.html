@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Bouton Partage</title>
+</head>
+<body>
+
+    <!-- Le bouton de partage -->
+    <button id="shareBtn">Partager</button>
+
+    <script>
+        document.getElementById('shareBtn').addEventListener('click', async () => {
+            // Vérifie si le navigateur supporte l'API de partage
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Titre de votre contenu',
+                        text: 'Découvrez ce super contenu !',
+                        url: window.location.href // ou l'URL de votre choix
+                    });
+                    console.log('Partage réussi');
+                } catch (error) {
+                    console.log('Erreur lors du partage ou annulation :', error);
+                }
+            } else {
+                // Solution de repli (fallback) si le navigateur ne supporte pas l'API
+                alert("Votre navigateur ne supporte pas le partage natif. Copiez le lien manuellement !");
+            }
+        });
+    </script>
+
+</body>
+</html>
